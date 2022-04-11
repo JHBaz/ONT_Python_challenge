@@ -42,3 +42,4 @@ class binaryImage:
 
 #how to get co ordinates of contigous pixels?
 #slice numpy array print coordinates
+#edit test

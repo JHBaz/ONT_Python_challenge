@@ -10,24 +10,24 @@ from pathlib import Path
 #code reusability
 bindata = binaryImage()
 #not in function as called every time file created ---> doesnt reset state of the object
+#use to compare successive files?
 def on_created_get_File(event):
     source_path = event.src_path
     fileNumber = Path(source_path).stem
-    print(fileNumber)
+    #print(fileNumber)
     bindata.bin_to_Image(fileNumber)
     
 if __name__ == "__main__":
-    #TOD0 change pattern to .bin or something that will onmly intake .bin file.
-    my_event_handler = PatternMatchingEventHandler(patterns=['*'], ignore_patterns=None, ignore_directories=False, case_sensitive=True)
+    my_event_handler = PatternMatchingEventHandler(patterns=['*.bin'], ignore_patterns=None, ignore_directories=False, case_sensitive=True)
     my_event_handler.on_created = on_created_get_File
     my_observer = Observer()
     my_observer.schedule(my_event_handler, path='./data', recursive=True)
-    my_observer.start()
+    my_observer.start() # creates a new thread
     #if something crashed, this moves to except
     try:
         while True:
-            time.sleep(1)
+            time.sleep(1) #keeps main thread running 
     except:
-        my_observer.stop()
-        #blocks the thread in which making the call properly
+        my_observer.stop() #does some work before the thread terminates
+        #blocks the thread the call was made from until self.observer is finished
         my_observer.join()

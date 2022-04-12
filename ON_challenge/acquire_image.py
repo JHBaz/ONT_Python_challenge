@@ -29,17 +29,4 @@ class binaryImage:
         reshaped_data = self.convert_array(binaryData)
         img = Image.fromarray(reshaped_data)
         img.save('Images/' + str(binaryData) + '.png')
-        #save some kind of reference for comparison
-
-   
-#one = binaryImage()
-#one.bin_to_Image('1')
-
-#(rows, columns, channels) for grey 
-#for i in range(len(binaryData)):
- #   for j in range(binaryData.shape[0,1,]):
-  #      binaryData.
-
-#how to get co ordinates of contigous pixels?
-#slice numpy array print coordinates
-#edit test
+        #save some kind of reference for comparison?

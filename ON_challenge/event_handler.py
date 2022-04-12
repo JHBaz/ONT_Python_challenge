@@ -6,6 +6,7 @@ from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 import time
 from pathlib import Path
+import os
 
 #code reusability
 bindata = binaryImage()
@@ -14,8 +15,14 @@ bindata = binaryImage()
 def on_created_get_File(event):
     source_path = event.src_path
     fileNumber = Path(source_path).stem
-    #print(fileNumber)
+    #if file contnents = previous bindata:
+        #delete file 
+        #os.remove()
+    #else:
+
+    #Concurrency...?
     bindata.bin_to_Image(fileNumber)
+    bindata.get_contiguous_cartesian(fileNumber)
     
 if __name__ == "__main__":
     my_event_handler = PatternMatchingEventHandler(patterns=['*.bin'], ignore_patterns=None, ignore_directories=False, case_sensitive=True)

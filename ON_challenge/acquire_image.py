@@ -29,6 +29,7 @@ class binaryImage:
         reshaped_data = self.convert_to_array(binaryData)
         img = Image.fromarray(reshaped_data)
         img.save('Images/' + str(binaryData) + '.png')
+        return img
         #save some kind of reference for comparison?
     
     def get_contiguous_cartesian(self, binaryData):

@@ -1,10 +1,16 @@
 #!/usr/bin/env python
 # coding: utf-8
+from distutils import text_file
+from fileinput import filename
 import numpy as np
+from numpy import savetxt
 from PIL import Image
 import pandas as pd
 import os
 import filecmp
+#import networkx as nx 
+from scipy import sparse
+import re 
 
 class binaryImage:
     def __init__(self):
@@ -55,22 +61,10 @@ class binaryImage:
     def get_contiguous_cartesian(self, binaryData):
         if os.path.exists(self.datadir + binaryData + '.bin') == False:
             return
-
         reshaped_data = self.convert_to_array(binaryData)
-        df = pd.DataFrame(reshaped_data)
-        print(df)
-        #contig_xy = []?
-        #for i in df:
-            #if (i = 255):
-                
-            #np.where(condition, X, Y)
-            #Contiguous_xy = np.where(i <= 120, , None )
-        #detect contiguous regions of white pixels
-        #output to .txt file 
-        #plot using seaborn
-        #return co ordinates? 
-           
-    #def contiguous_cartesian_to_text(self):
-        #return coordinates in text file ?
-        #pass
-        
+        sdata = sparse.csr_matrix(reshaped_data)
+        sdata.maxprint = sdata.count_nonzero()
+        with open('xy/' + str(binaryData) + '.txt',"w") as file:
+            file.write(str(sdata))
+            file.close()
+        return str(sdata)

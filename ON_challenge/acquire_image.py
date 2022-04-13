@@ -46,7 +46,6 @@ class binaryImage:
         img.save('Images/' + str(binaryData) + '.png')
         self.previous_fileName = binaryData
         return img
-        #save some kind of reference for comparison?
     
     def is_file_contents_same(self, binaryData):
         prevFile = self.datadir + self.previous_fileName + '.bin'

@@ -17,10 +17,10 @@ class TestbinaryImage(unittest.TestCase):
         fileName = '1'
         self.assertEqual(bindata.bin_to_Image(fileName), bindata.bin_to_Image(fileName), 'img should be equal')
   
-    def test_cartesian_coordinates(self):
+    def test_contiguous_xy_coordinates(self):
         bindata = binaryImage()
         fileName = '1'
-        self.assertEqual(bindata.get_contiguous_cartesian(fileName), bindata.get_contiguous_cartesian(fileName), 'sdata should be equal') #split function again? 
+        self.assertEqual(bindata.get_contiguous_cartesian(fileName), bindata.get_contiguous_cartesian(fileName), 'xyco should be equal') #split function again? 
         
 
 

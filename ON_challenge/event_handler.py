@@ -6,24 +6,20 @@ from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 import time
 from pathlib import Path
-
+from threading import Thread
 
 #code reusability
 bindata = binaryImage()
 #not in function as called every time file created ---> doesnt reset state of the object
-#use to compare successive files?
 def on_created_get_File(event):
     source_path = event.src_path
     fileNumber = Path(source_path).stem
-    #if file contnents = previous bindata:
-        #delete file 
-        #os.remove()
-    #else:
 
-    #Concurrency...?
     bindata.bin_to_Image(fileNumber)
-    bindata.get_contiguous_cartesian(fileNumber)
-    
+    thread= Thread(target=bindata.get_contiguous_cartesian(fileNumber))
+    thread.daemon= True
+    thread.start()
+
 if __name__ == "__main__":
     #if something crashed, this moves to except
     my_event_handler = PatternMatchingEventHandler(patterns=['*.bin'], ignore_patterns=None, ignore_directories=False, case_sensitive=True)
@@ -34,3 +30,5 @@ if __name__ == "__main__":
     
     while True:
         time.sleep(1) #keeps main thread running 
+
+

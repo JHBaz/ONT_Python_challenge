@@ -1,21 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
-from distutils import text_file
-from fileinput import filename
 import numpy as np
-from numpy import savetxt
 from PIL import Image
-import pandas as pd
 import os
 import filecmp
-#import networkx as nx 
-from scipy import sparse
-import re 
 
 class binaryImage:
     def __init__(self):
         #magic numbers
         self.datadir = 'data/'
+        self.xydir = 'xy/'
         self.previous_fileName = None
 
     def convert_to_array(self, binaryData):
@@ -61,10 +55,53 @@ class binaryImage:
     def get_contiguous_cartesian(self, binaryData):
         if os.path.exists(self.datadir + binaryData + '.bin') == False:
             return
+        if os.path.exists(self.xydir + binaryData + '.txt') == True:
+            os.remove(self.xydir + binaryData + '.txt')
+
         reshaped_data = self.convert_to_array(binaryData)
-        sdata = sparse.csr_matrix(reshaped_data)
-        sdata.maxprint = sdata.count_nonzero()
-        with open('xy/' + str(binaryData) + '.txt',"w") as file:
-            file.write(str(sdata))
-            file.close()
-        return str(sdata)
+        solutions = np.argwhere(reshaped_data == 255)
+
+        directions = [[1,0], [-1, 0], [0,1], [0,-1]]
+        xy_cordinates = []
+        for solution in solutions: 
+            for direction in directions: 
+                coordinate = np.add(solution, direction)
+                coordinate = list(coordinate)
+                if coordinate[1] > 129 or coordinate[1] < 0:
+                    continue
+                if coordinate[0] > 315 or coordinate[0] < 0:
+                    continue
+                if reshaped_data[coordinate[0]][coordinate[1]] == 255:
+                    
+                    with open(self.xydir+ str(binaryData) + '.txt',"a") as file:
+                        file.write(str(solution)+ '\n')
+                        file.close()
+                    np.append(xy_cordinates, solution)
+                    break
+        return xy_cordinates
+        
+                    
+
+        
+
+
+
+
+        #sdata = sparse.csr_matrix(reshaped_data)
+       # sdata.maxprint = sdata.count_nonzero()
+       # with open('xy/' + str(binaryData) + '.txt',"w") as file:
+      #      file.write(str(sdata))
+      #      file.close()
+      #  return str(sdata)
+
+
+
+        
+
+
+
+
+
+
+
+        

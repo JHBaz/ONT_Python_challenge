@@ -16,7 +16,7 @@ class binaryImage:
         # This function converts the binary file into a 130 x 316 np array. 
         data = np.fromfile(self.datadir + binaryData + '.bin', dtype='uint8', count=-1, sep='', offset=0)
         newdata = []
-        for i in data: # input should always be fixed (316 x 130 = 41080 unint8) ==> O(n) time complexity
+        for i in data: # input should always be fixed (316 x 130 = 41080 unint8) ==> O(n) time complexity ==> O(41080) => O(1)?
             if i <= 120:
                 newdata.append(255)
             else:
@@ -62,7 +62,7 @@ class binaryImage:
 
         directions = [[1,0], [-1, 0], [0,1], [0,-1]]
         xy_cordinates = []
-        for solution in solutions: # O(n * m) time complexity?
+        for solution in solutions: # O(n * m) time complexity? n max = 41080, m max = 4 => O(1)?
             for direction in directions: 
                 coordinate = np.add(solution, direction)
                 coordinate = list(coordinate)

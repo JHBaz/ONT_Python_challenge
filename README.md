@@ -3,18 +3,17 @@
 
 ON_challenge directory contains 3 python files which respond to '.bin' files added to data directory (which is also in ON_challenge dir). 
 
-#How to run the program:
-from terminal run 'python3 event_handler.py' or however python run on native machine. 
+# How to run the program:
+from terminal run 'event_handler.py' 
+
+# How to run tests
+from terminal run 'test_image.py' 
 
 add .bin files to data directory. 
 
 X.png will be added in the Images dir. 
 
-#TODO
-- Contiguous function
-- Create a class which randomly generates uniform sized binary images/ arrays to test scalability?
-- is volTRAX multi CPU? many threads, and must be executed on device for portability? Connect to network when docked? Need to ressearch further. 
+Contiguous regions of white pixels will be saved in a .txt file in format [y x] 
 
-Pseudo code:
-- contiguous functionality: thinking this best by creating a cross hair that is looped through the reshaped array. Then use np.where() function to get co ordinates... or use pd df to use columns and indicies?
-- Further tests for contiguous function: e.g compare outputs, see if the same? 
+#TODO
+- is volTRAX multi CPU? many threads, and must be executed on device for portability? Connect to network when docked? Need to ressearch further. 

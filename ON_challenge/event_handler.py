@@ -8,9 +8,8 @@ import time
 from pathlib import Path
 from threading import Thread
 
-#code reusability
 bindata = binaryImage()
-#not in function as called every time file created ---> doesnt reset state of the object
+# not in function as called every time file created ---> doesnt reset state of the object
 def on_created_get_File(event):
     source_path = event.src_path
     fileNumber = Path(source_path).stem
@@ -21,7 +20,7 @@ def on_created_get_File(event):
     thread.start()
 
 if __name__ == "__main__":
-    #if something crashed, this moves to except
+    #if called as main program:
     my_event_handler = PatternMatchingEventHandler(patterns=['*.bin'], ignore_patterns=None, ignore_directories=False, case_sensitive=True)
     my_event_handler.on_created = on_created_get_File
     my_observer = Observer()
@@ -29,6 +28,6 @@ if __name__ == "__main__":
     my_observer.start() # creates a new thread
     
     while True:
-        time.sleep(1) #keeps main thread running 
+        time.sleep(1) # keeps main thread running
 
 

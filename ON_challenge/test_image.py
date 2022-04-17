@@ -5,7 +5,7 @@ import unittest
 from acquire_image import binaryImage
 
 class TestbinaryImage(unittest.TestCase):
-    #unittests should be stateless between runs
+    
     #given different input can elicit same output due to thresholds, so no assertFalse used
     def test_acquire_array(self):
         bindata = binaryImage()
@@ -20,10 +20,8 @@ class TestbinaryImage(unittest.TestCase):
     def test_contiguous_xy_coordinates(self):
         bindata = binaryImage()
         fileName = '1'
-        self.assertEqual(bindata.get_contiguous_cartesian(fileName), bindata.get_contiguous_cartesian(fileName), 'xyco should be equal') #split function again? 
+        self.assertEqual(bindata.get_contiguous_cartesian(fileName), bindata.get_contiguous_cartesian(fileName), 'xyco should be equal')
         
-
-
 if __name__ == '__main__':
     unittest.main()
 

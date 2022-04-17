@@ -13,6 +13,7 @@ class binaryImage:
         self.previous_fileName = None
 
     def convert_to_array(self, binaryData):
+        #This function converts the binary file into a 130 x 316 np array. 
         data = np.fromfile(self.datadir + binaryData + '.bin', dtype='uint8', count=-1, sep='', offset=0)
         newdata = []
         for i in data:
@@ -28,34 +29,32 @@ class binaryImage:
         return reshaped_data
 
     def bin_to_Image(self, binaryData):
-        if os.path.exists(self.datadir + binaryData + '.bin') == False:
+        if os.path.exists(self.datadir + binaryData + '.bin') == False: #checks if file exists
             return
-        #check file names equal or not. will skip next if statement
+
         #Error handling for case where no previously set fileName
         if (self.previous_fileName == None):
             self.previous_fileName = binaryData
-
+        
+        #calls function to check if file contents are the same.
         if (self.previous_fileName != binaryData):
             if(self.is_file_contents_same(binaryData)):
                 #delete the successive file from Data dir
                 os.remove(self.datadir + binaryData + '.bin')
                 return
 
+        #saves a .png image of the binary file
         reshaped_data = self.convert_to_array(binaryData)
         img = Image.fromarray(reshaped_data)
         img.save('Images/' + str(binaryData) + '.png')
         self.previous_fileName = binaryData
         return img
-    
-    def is_file_contents_same(self, binaryData):
-        prevFile = self.datadir + self.previous_fileName + '.bin'
-        currentFile = self.datadir + binaryData + '.bin'
-        return filecmp.cmp(prevFile, currentFile, shallow=False)
 
     def get_contiguous_cartesian(self, binaryData):
-        if os.path.exists(self.datadir + binaryData + '.bin') == False:
+        #Function that gets the co ordinates of contiguous white (255) regions, saves co ordinates in .txt file 
+        if os.path.exists(self.datadir + binaryData + '.bin') == False: #checks if the binary file exists
             return
-        if os.path.exists(self.xydir + binaryData + '.txt') == True:
+        if os.path.exists(self.xydir + binaryData + '.txt') == True: #checks if .txt file exists already, if true update this 
             os.remove(self.xydir + binaryData + '.txt')
 
         reshaped_data = self.convert_to_array(binaryData)
@@ -80,20 +79,11 @@ class binaryImage:
                     break
         return xy_cordinates
         
-                    
-
-        
-
-
-
-
-        #sdata = sparse.csr_matrix(reshaped_data)
-       # sdata.maxprint = sdata.count_nonzero()
-       # with open('xy/' + str(binaryData) + '.txt',"w") as file:
-      #      file.write(str(sdata))
-      #      file.close()
-      #  return str(sdata)
-
+    def is_file_contents_same(self, binaryData):
+        #function that compares file contents 
+        prevFile = self.datadir + self.previous_fileName + '.bin'
+        currentFile = self.datadir + binaryData + '.bin'
+        return filecmp.cmp(prevFile, currentFile, shallow=False)
 
 
         

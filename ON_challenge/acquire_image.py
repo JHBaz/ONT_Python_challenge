@@ -62,6 +62,7 @@ class binaryImage:
 
         directions = [[1,0], [-1, 0], [0,1], [0,-1]]
         xy_cordinates = []
+        
         for whitepixel in whitepixels:
             for direction in directions: 
                 coordinate = np.add(whitepixel, direction)

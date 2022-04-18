@@ -10,17 +10,21 @@ from threading import Thread
 
 bindata = binaryImage()
 # not in function as called every time file created ---> doesnt reset state of the object
+
 def on_created_get_File(event):
+    # function that gets the fileNumber as arguments for the methods in Image class
     source_path = event.src_path
     fileNumber = Path(source_path).stem
-
-    bindata.bin_to_Image(fileNumber)
+    
+    bindata.bin_to_Image(fileNumber) # Calls to save image
+    
+    # seperate thread for thread for contiguous co ordinate finding.
     thread= Thread(target=bindata.get_contiguous_cartesian(fileNumber))
     thread.daemon= True
     thread.start()
 
 if __name__ == "__main__":
-    #if called as main program:
+    # if called as main program:
     my_event_handler = PatternMatchingEventHandler(patterns=['*.bin'], ignore_patterns=None, ignore_directories=False, case_sensitive=True)
     my_event_handler.on_created = on_created_get_File
     my_observer = Observer()

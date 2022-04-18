@@ -17,4 +17,4 @@ From terminal run 'test_image.py'
 
 # Further thoughts 
 - Assess time complexity of coordinate function in 'acquire_image.py', O(n * m), but as input is fixed => O(1)?
-- How many .bin file can handle before stack overflow?
+- How many .bin files can handle before stack overflow?

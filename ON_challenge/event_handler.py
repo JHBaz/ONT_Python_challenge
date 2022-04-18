@@ -12,14 +12,14 @@ bindata = binaryImage()
 # not in function as called every time file created ---> doesnt reset state of the object
 
 def on_created_get_File(event):
-    # function that gets the fileNumber as arguments for the methods in Image class
+    # Function that gets the fileNumber as arguments for the methods in Image class
     source_path = event.src_path
     fileNumber = Path(source_path).stem
     
     bindata.bin_to_Image(fileNumber) # Calls to save image
     
-    # seperate thread for thread for contiguous co ordinate finding.
-    thread= Thread(target=bindata.get_contiguous_cartesian(fileNumber))
+    # Seperate thread for contiguous co ordinate finding.
+    thread= Thread(target=bindata.get_contiguous_coordinates(fileNumber))
     thread.daemon= True
     thread.start()
 
@@ -32,6 +32,6 @@ if __name__ == "__main__":
     my_observer.start() # creates a new thread
     
     while True:
-        time.sleep(1) # keeps main thread running
+        time.sleep(1)
 
 

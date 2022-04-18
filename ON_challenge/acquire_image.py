@@ -16,7 +16,7 @@ class binaryImage:
         # This function converts the binary file into a 130 x 316 np array. 
         data = np.fromfile(self.datadir + binaryData + '.bin', dtype='uint8', count=-1, sep='', offset=0)
         newdata = []
-        for i in data: # input should always be fixed (316 x 130 = 41080 unint8)
+        for i in data: # Input should always be fixed (316 x 130 = 41080 unint8)
             if i <= 120:
                 newdata.append(255)
             else:
@@ -37,7 +37,7 @@ class binaryImage:
         if (self.previous_fileName == None):
             self.previous_fileName = binaryData
         
-        # calls function to check if file contents are the same.
+        # Calls function to check if file contents are the same.
         if (self.previous_fileName != binaryData):
             if(self.is_file_contents_same(binaryData)):
                 # delete the successive file from Data dir
@@ -50,11 +50,11 @@ class binaryImage:
         self.previous_fileName = binaryData
         return img
 
-    def get_contiguous_cartesian(self, binaryData):
+    def get_contiguous_coordinates(self, binaryData):
         # Function that gets the coordinates of contiguous white (255) regions of the np array
-        if os.path.exists(self.datadir + binaryData + '.bin') == False: # checks if the binary file exists
+        if os.path.exists(self.datadir + binaryData + '.bin') == False: # Checks if the binary file exists
             return
-        if os.path.exists(self.xydir + binaryData + '.txt') == True: # checks if .txt file exists already, if true update this 
+        if os.path.exists(self.xydir + binaryData + '.txt') == True: # Checks if .txt file exists already, if true update this 
             os.remove(self.xydir + binaryData + '.txt')
 
         reshaped_data = self.convert_to_array(binaryData)
@@ -72,9 +72,9 @@ class binaryImage:
                 if coordinate[1] > 315 or coordinate[1] < 0:
                     continue
                 if reshaped_data[coordinate[0]][coordinate[1]] == 255:
-                    whitepixel[0],whitepixel[1] = whitepixel[1],whitepixel[0] #switches yx --> xy
+                    whitepixel[0],whitepixel[1] = whitepixel[1],whitepixel[0] # Switches yx --> xy
 
-                    #saves xy co ordinates to .txt file, with name of the bin file as the name of the text file
+                    # Saves xy co ordinates to .txt file, with name of the bin file as the name of the text file
                     with open(self.xydir+ str(binaryData) + '.txt',"a") as file:
                         file.write(str(whitepixel)+ '\n')
                         file.close()
@@ -84,7 +84,7 @@ class binaryImage:
         return xy_cordinates
         
     def is_file_contents_same(self, binaryData):
-        # function that compares file contents 
+        # Function that compares file contents 
         prevFile = self.datadir + self.previous_fileName + '.bin'
         currentFile = self.datadir + binaryData + '.bin'
         return filecmp.cmp(prevFile, currentFile, shallow=False)

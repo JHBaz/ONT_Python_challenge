@@ -16,12 +16,14 @@ def on_created_get_File(event):
     source_path = event.src_path
     fileNumber = Path(source_path).stem
     
-    bindata.bin_to_Image(fileNumber) # Calls to save image
-    
     # Seperate thread for contiguous co ordinate finding.
     thread= Thread(target=bindata.get_contiguous_coordinates(fileNumber))
     thread.daemon= True
     thread.start()
+
+    bindata.bin_to_Image(fileNumber) # Calls to save image
+    
+
 
 if __name__ == "__main__":
     # if called as main program:
